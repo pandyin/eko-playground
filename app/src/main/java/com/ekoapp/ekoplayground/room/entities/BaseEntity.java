@@ -1,4 +1,20 @@
 package com.ekoapp.ekoplayground.room.entities;
 
-public class BaseEntity {
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
+public abstract class BaseEntity {
+
+    @NonNull
+    @PrimaryKey
+    private String id;
+
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
 }
