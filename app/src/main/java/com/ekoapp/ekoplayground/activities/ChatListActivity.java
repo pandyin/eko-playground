@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.ekoapp.ekoplayground.R;
 
-public class ChatListActivity extends BaseActivity {
+public class ChatListActivity extends EkoActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.ekoapp.ekoplayground.room.EkoDatabase;
 
-public class EkoPlaygroundApp extends Application {
+public class EkoApp extends Application {
 
     @Override
     public void onCreate() {

@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import com.ekoapp.ekoplayground.models.MessageType;
 
 @Entity
-public class Message extends BaseEntity {
+public class Message extends EkoEntity {
 
     @NonNull
     private MessageType type;

@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.ekoapp.ekoplayground.R;
 
-public class MessageListActivity extends BaseActivity {
+public class MessageListActivity extends EkoActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.ekoapp.ekoplayground.R;
 
-public class LogInActivity extends BaseActivity {
+public class LogInActivity extends EkoActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

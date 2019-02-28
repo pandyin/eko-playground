@@ -3,7 +3,7 @@ package com.ekoapp.ekoplayground.room.entities;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-public abstract class BaseEntity {
+public abstract class EkoEntity {
 
     @NonNull
     @PrimaryKey

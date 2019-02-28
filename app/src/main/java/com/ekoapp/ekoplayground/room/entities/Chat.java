@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import com.ekoapp.ekoplayground.models.ChatType;
 
 @Entity
-public class Chat extends BaseEntity {
+public class Chat extends EkoEntity {
 
     @NonNull
     private ChatType type;

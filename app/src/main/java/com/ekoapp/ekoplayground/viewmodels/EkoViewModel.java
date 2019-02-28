@@ -4,9 +4,9 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.support.annotation.NonNull;
 
-public abstract class BaseViewModel extends AndroidViewModel {
+public abstract class EkoViewModel extends AndroidViewModel {
 
-    BaseViewModel(@NonNull Application application) {
+    EkoViewModel(@NonNull Application application) {
         super(application);
     }
 }

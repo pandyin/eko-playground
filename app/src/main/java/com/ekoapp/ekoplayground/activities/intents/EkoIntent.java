@@ -1,4 +1,4 @@
 package com.ekoapp.ekoplayground.activities.intents;
 
-public class BaseIntent {
+public abstract class EkoIntent {
 }
