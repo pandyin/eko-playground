@@ -42,6 +42,9 @@ dependencies {
         exclude group: 'com.google.guava', module: 'listenablefuture'
     }
 
+    implementation 'com.ekoapp.ekosdk:ekosdk:1.5.0'
+    implementation 'com.ekoapp.voip:voip:0.12.2'
+
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
 
 //    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
