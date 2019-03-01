@@ -15,6 +15,7 @@ import com.uber.autodispose.AutoDispose;
 import butterknife.BindView;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
 
 public class LogInActivity extends EkoActivity {
 
@@ -47,6 +48,7 @@ public class LogInActivity extends EkoActivity {
                         startActivity(new ChatListIntent(this));
                         finish();
                     })
+                    .subscribeOn(Schedulers.io())
                     .as(AutoDispose.autoDisposable(this))
                     .subscribe();
         });

@@ -9,6 +9,7 @@ import com.google.gson.JsonParser;
 
 import javax.annotation.Nullable;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -26,8 +27,10 @@ public class EkoSocket {
         return Single.never();
     }
 
-    public static Single<String> connect(String username, String password, String deviceId) {
-        return auth(username, password, deviceId).doOnSuccess(EkoSocket::connect);
+    public static Completable connect(String username, String password, String deviceId) {
+        return auth(username, password, deviceId)
+                .doOnSuccess(EkoSocket::connect)
+                .ignoreElement();
     }
 
     private static Single<String> auth(String username, String password, String deviceId) {
@@ -46,7 +49,7 @@ public class EkoSocket {
 
             Request request = new Request.Builder()
                     .addHeader("Content-Type", "application/json")
-                    .url("http://h1.eko01.local/api/v1/auth/login")
+                    .url("https://staging-h1.dev.ekoapp.com/api/v1/auth/login")
                     .post(body)
                     .build();
 

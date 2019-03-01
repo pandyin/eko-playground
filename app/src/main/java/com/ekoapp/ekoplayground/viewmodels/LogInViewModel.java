@@ -25,8 +25,7 @@ public class LogInViewModel extends EkoViewModel {
         return userDao
                 .getUser()
                 .switchIfEmpty(EkoSocket.connect(username, password, UUID.randomUUID().toString())
-                        .doOnSuccess(json -> userDao.insertUser(new User()))
-                        .ignoreElement()
+                        .doOnComplete(() -> userDao.insertUser(new User()))
                         .andThen(userDao.getUser().toSingle()));
     }
 }
