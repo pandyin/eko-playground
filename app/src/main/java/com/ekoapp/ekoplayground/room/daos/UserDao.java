@@ -12,9 +12,12 @@ import io.reactivex.Maybe;
 @Dao
 public abstract class UserDao extends EkoDao<User> {
 
-    @Query("select * from user")
+    @Query("select * from user limit 1")
     public abstract Maybe<User> getUser();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertUser(User user);
+
+    @Query("delete from user")
+    public abstract void deleteUser();
 }

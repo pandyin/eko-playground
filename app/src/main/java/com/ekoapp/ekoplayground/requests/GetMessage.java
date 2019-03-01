@@ -1,12 +1,17 @@
 package com.ekoapp.ekoplayground.requests;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.immutables.value.Value;
 
 @Value.Immutable
-public class GetMessage implements EkoRequest {
+public interface GetMessage extends EkoRequest {
 
     @Override
-    public String getMethod() {
+    default String getMethod() {
         return "";
     }
+
+    @SerializedName("")
+    String getChatId();
 }

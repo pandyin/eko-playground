@@ -1,12 +1,20 @@
 package com.ekoapp.ekoplayground.requests;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.immutables.value.Value;
 
 @Value.Immutable
-public class LogInRequest implements EkoRequest {
+public interface LogInRequest extends EkoRequest {
 
     @Override
-    public String getMethod() {
+    default String getMethod() {
         return "";
     }
+
+    @SerializedName("username")
+    String getUsername();
+
+    @SerializedName("password")
+    String getPassword();
 }

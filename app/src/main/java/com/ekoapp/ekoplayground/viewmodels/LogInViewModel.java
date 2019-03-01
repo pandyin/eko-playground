@@ -3,11 +3,12 @@ package com.ekoapp.ekoplayground.viewmodels;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
-import com.ekoapp.ekoplayground.requests.ImmutableLogInRequest;
 import com.ekoapp.ekoplayground.room.EkoDatabase;
+import com.ekoapp.ekoplayground.room.daos.UserDao;
 import com.ekoapp.ekoplayground.room.entities.User;
 import com.ekoapp.ekoplayground.socket.EkoSocket;
-import com.google.gson.Gson;
+
+import java.util.UUID;
 
 import io.reactivex.Single;
 
@@ -17,22 +18,15 @@ public class LogInViewModel extends EkoViewModel {
         super(application);
     }
 
-    public Single<User> getUser() {
-        return EkoDatabase.get()
-                .getUserDao()
-                .getUser()
-                .switchIfEmpty(logIn());
-    }
+    public Single<User> logIn(String username, String password) {
+        UserDao userDao = EkoDatabase.get()
+                .getUserDao();
 
-    private Single<User> logIn() {
-        return EkoSocket.call(ImmutableLogInRequest.builder().build())
-                .doOnSuccess(json -> EkoDatabase.get()
-                        .getUserDao()
-                        .insertUser(new Gson().fromJson(json, User.class)))
-                .ignoreElement()
-                .andThen(EkoDatabase.get()
-                        .getUserDao()
-                        .getUser()
-                        .toSingle());
+        return userDao
+                .getUser()
+                .switchIfEmpty(EkoSocket.connect(username, password, UUID.randomUUID().toString())
+                        .doOnSuccess(json -> userDao.insertUser(new User()))
+                        .ignoreElement()
+                        .andThen(userDao.getUser().toSingle()));
     }
 }

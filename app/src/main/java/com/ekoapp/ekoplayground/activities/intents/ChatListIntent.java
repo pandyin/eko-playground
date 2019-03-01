@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.ekoapp.ekoplayground.activities.ChatListActivity;
 
-public class ChatListIntent extends EkoIntent {
+public class ChatListIntent extends EkoIntent<ChatListActivity> {
 
     public ChatListIntent(Context context) {
         super(context, ChatListActivity.class);

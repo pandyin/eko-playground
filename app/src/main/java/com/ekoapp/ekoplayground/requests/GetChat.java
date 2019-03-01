@@ -3,10 +3,10 @@ package com.ekoapp.ekoplayground.requests;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public class GetChat implements EkoRequest {
+public interface GetChat extends EkoRequest {
 
     @Override
-    public String getMethod() {
+    default String getMethod() {
         return "";
     }
 }
