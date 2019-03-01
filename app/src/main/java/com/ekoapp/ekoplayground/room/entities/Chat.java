@@ -11,6 +11,11 @@ public class Chat extends EkoEntity {
     @NonNull
     private ChatType type;
 
+    public Chat(@NonNull String id, @NonNull ChatType type) {
+        super(id);
+        this.type = type;
+    }
+
     @NonNull
     public ChatType getType() {
         return type;

@@ -3,14 +3,20 @@ package com.ekoapp.ekoplayground.socket;
 import com.ekoapp.ekoplayground.requests.EkoRequest;
 import com.ekoapp.ekoplayground.room.EkoDatabase;
 import com.google.common.base.Optional;
+import com.google.common.collect.Maps;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.Map;
+
 import javax.annotation.Nullable;
 
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
+import io.reactivex.subjects.MaybeSubject;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,10 +27,34 @@ import okhttp3.WebSocketListener;
 
 public class EkoSocket {
 
+    private static int ID = 1;
+
     private static Optional<WebSocket> SOCKET = Optional.absent();
 
-    public static Single<JsonObject> call(EkoRequest request) {
-        return Single.never();
+    private static Map<Integer, MaybeSubject<JsonElement>> MAP = Maps.newConcurrentMap();
+
+    public static Maybe<JsonElement> call(EkoRequest request) {
+        if (!SOCKET.isPresent()) {
+            return Maybe.error(new Exception("no web socket!!!"));
+        }
+
+        JsonArray p = new JsonArray();
+        p.add(request.getParam1());
+        p.add(request.getParam2());
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", ID);
+        jsonObject.addProperty("m", request.getMethod());
+        jsonObject.add("p", p);
+
+        String message = "41|" + jsonObject.toString();
+        SOCKET.get().send(message);
+
+        MaybeSubject<JsonElement> subject = MaybeSubject.create();
+        MAP.put(ID, subject);
+        ID++;
+
+        return subject;
     }
 
     public static Completable connect(String username, String password, String deviceId) {
@@ -90,6 +120,29 @@ public class EkoSocket {
 
             @Override
             public void onMessage(WebSocket webSocket, String text) {
+                if (text.contains("|")) {
+                    String[] array = text.split("\\|");
+                    JsonParser parser = new JsonParser();
+                    JsonObject json = parser.parse(array[1]).getAsJsonObject();
+
+                    if (json.has("id")) {
+                        int id = json.get("id").getAsInt();
+
+                        if (MAP.containsKey(id)) {
+                            MaybeSubject<JsonElement> subject = MAP.get(id);
+                            JsonArray p = json.get("p").getAsJsonArray();
+
+                            if (p.get(0).isJsonNull()) {
+                                subject.onSuccess(p.get(1));
+                                subject.onComplete();
+                            } else {
+                                subject.onError(new Exception(p.get(0).getAsString()));
+                            }
+
+                            MAP.remove(id);
+                        }
+                    }
+                }
             }
         }));
     }

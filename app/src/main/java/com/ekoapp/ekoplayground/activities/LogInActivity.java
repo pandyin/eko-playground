@@ -1,5 +1,6 @@
 package com.ekoapp.ekoplayground.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -7,7 +8,6 @@ import android.widget.EditText;
 import com.ekoapp.ekoplayground.R;
 import com.ekoapp.ekoplayground.R2;
 import com.ekoapp.ekoplayground.activities.intents.ChatListIntent;
-import com.ekoapp.ekoplayground.viewmodels.EkoViewModel;
 import com.ekoapp.ekoplayground.viewmodels.LogInViewModel;
 import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.uber.autodispose.AutoDispose;
@@ -40,11 +40,11 @@ public class LogInActivity extends EkoActivity {
                 .subscribe();
 
         logIn.setOnClickListener(v -> {
-            LogInViewModel viewModel = EkoViewModel.get(this,
-                    LogInViewModel.class);
+            LogInViewModel viewModel = ViewModelProviders.of(this)
+                    .get(LogInViewModel.class);
 
             viewModel.logIn(username.getText().toString(), password.getText().toString())
-                    .doOnSuccess(user -> {
+                    .doOnComplete(() -> {
                         startActivity(new ChatListIntent(this));
                         finish();
                     })
