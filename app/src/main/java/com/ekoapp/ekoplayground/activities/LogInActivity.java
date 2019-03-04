@@ -8,6 +8,7 @@ import android.widget.EditText;
 import com.ekoapp.ekoplayground.R;
 import com.ekoapp.ekoplayground.R2;
 import com.ekoapp.ekoplayground.activities.intents.ChatListIntent;
+import com.ekoapp.ekoplayground.room.entities.User;
 import com.ekoapp.ekoplayground.viewmodels.LogInViewModel;
 import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.uber.autodispose.AutoDispose;
@@ -15,6 +16,7 @@ import com.uber.autodispose.AutoDispose;
 import butterknife.BindView;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class LogInActivity extends EkoActivity {
@@ -42,20 +44,19 @@ public class LogInActivity extends EkoActivity {
         LogInViewModel viewModel = ViewModelProviders.of(this)
                 .get(LogInViewModel.class);
 
+        Consumer<User> logInConsumer = user -> {
+            startActivity(new ChatListIntent(this));
+            finish();
+        };
+
         viewModel.logIn()
-                .doOnSuccess(user -> {
-                    startActivity(new ChatListIntent(this));
-                    finish();
-                })
+                .doOnSuccess(logInConsumer)
                 .subscribeOn(Schedulers.io())
                 .as(AutoDispose.autoDisposable(this))
                 .subscribe();
 
         logIn.setOnClickListener(v -> viewModel.logIn(username.getText().toString(), password.getText().toString())
-                .doOnSuccess(user -> {
-                    startActivity(new ChatListIntent(this));
-                    finish();
-                })
+                .doOnSuccess(logInConsumer)
                 .subscribeOn(Schedulers.io())
                 .as(AutoDispose.autoDisposable(this))
                 .subscribe());
