@@ -1,6 +1,7 @@
 package com.ekoapp.ekoplayground.activities.adapters;
 
 import android.arch.paging.PagedListAdapter;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,14 @@ import android.widget.TextView;
 
 import com.ekoapp.ekoplayground.room.entities.EkoEntity;
 
-public class EkoAdapter<ENTITY extends EkoEntity> extends PagedListAdapter<ENTITY, EkoViewHolder> {
+public abstract class EkoAdapter<ENTITY extends EkoEntity> extends PagedListAdapter<ENTITY, EkoViewHolder> {
 
-    public EkoAdapter() {
+    @NonNull
+    private final Context context;
+
+    public EkoAdapter(@NonNull Context context) {
         super(new EkoItemCallback<>());
+        this.context = context;
     }
 
     @NonNull
@@ -24,5 +29,13 @@ public class EkoAdapter<ENTITY extends EkoEntity> extends PagedListAdapter<ENTIT
     @Override
     public void onBindViewHolder(@NonNull EkoViewHolder holder, int position) {
         ((TextView) holder.itemView.findViewById(android.R.id.text1)).setText(getItem(position).getId());
+        ((TextView) holder.itemView.findViewById(android.R.id.text1)).setOnClickListener(v -> onItemSelected(getItem(position)));
+    }
+
+    abstract void onItemSelected(ENTITY entity);
+
+    @NonNull
+    Context getContext() {
+        return context;
     }
 }

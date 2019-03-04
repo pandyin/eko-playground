@@ -7,8 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.ekoapp.ekoplayground.R;
 import com.ekoapp.ekoplayground.R2;
-import com.ekoapp.ekoplayground.activities.adapters.EkoAdapter;
-import com.ekoapp.ekoplayground.room.entities.Chat;
+import com.ekoapp.ekoplayground.activities.adapters.ChatAdapter;
 import com.ekoapp.ekoplayground.viewmodels.ChatListViewModel;
 import com.uber.autodispose.AutoDispose;
 
@@ -29,7 +28,7 @@ public class ChatListActivity extends EkoActivity {
         ChatListViewModel viewModel = ViewModelProviders.of(this)
                 .get(ChatListViewModel.class);
 
-        EkoAdapter<Chat> adapter = new EkoAdapter<>();
+        ChatAdapter adapter = new ChatAdapter(this);
         chatList.setAdapter(adapter);
         chatList.setLayoutManager(new LinearLayoutManager(this));
 

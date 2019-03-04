@@ -20,7 +20,9 @@ public abstract class ChatDao extends EkoDao<Chat> {
     public void insert(JsonArray jsonArray) {
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-            insert(new Chat(jsonObject.get("group").getAsJsonObject().get("_id").getAsString(), ChatType.DIRECT));
+            JsonObject chat = jsonObject.get("group").getAsJsonObject();
+            insert(new Chat(chat.get("_id").getAsString(),
+                    ChatType.DIRECT));
         }
     }
 }

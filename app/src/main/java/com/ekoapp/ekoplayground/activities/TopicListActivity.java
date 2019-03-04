@@ -7,33 +7,33 @@ import android.support.v7.widget.RecyclerView;
 
 import com.ekoapp.ekoplayground.R;
 import com.ekoapp.ekoplayground.R2;
-import com.ekoapp.ekoplayground.activities.adapters.MessageAdapter;
-import com.ekoapp.ekoplayground.activities.intents.MessageListIntent;
-import com.ekoapp.ekoplayground.viewmodels.MessageListViewModel;
+import com.ekoapp.ekoplayground.activities.adapters.TopicAdapter;
+import com.ekoapp.ekoplayground.activities.intents.TopicListIntent;
+import com.ekoapp.ekoplayground.viewmodels.TopicListViewModel;
 import com.uber.autodispose.AutoDispose;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MessageListActivity extends EkoActivity {
+public class TopicListActivity extends EkoActivity {
 
-    @BindView(R2.id.message_list_recycler_view)
-    RecyclerView messageList;
+    @BindView(R2.id.chat_list_recycler_view)
+    RecyclerView chatList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message_list);
+        setContentView(R.layout.activity_chat_list);
 
-        MessageListViewModel viewModel = ViewModelProviders.of(this)
-                .get(MessageListViewModel.class);
+        TopicListViewModel viewModel = ViewModelProviders.of(this)
+                .get(TopicListViewModel.class);
 
-        MessageAdapter adapter = new MessageAdapter(this);
-        messageList.setAdapter(adapter);
-        messageList.setLayoutManager(new LinearLayoutManager(this));
+        TopicAdapter adapter = new TopicAdapter(this);
+        chatList.setAdapter(adapter);
+        chatList.setLayoutManager(new LinearLayoutManager(this));
 
-        viewModel.getMessage(MessageListIntent.getTopicId(getIntent()))
+        viewModel.getTopic(TopicListIntent.getChatId(getIntent()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(adapter::submitList)
                 .subscribeOn(Schedulers.io())

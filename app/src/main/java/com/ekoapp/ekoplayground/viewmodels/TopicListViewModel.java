@@ -5,11 +5,10 @@ import android.arch.paging.PagedList;
 import android.arch.paging.RxPagedListBuilder;
 import android.support.annotation.NonNull;
 
-import com.ekoapp.ekoplayground.models.Direction;
-import com.ekoapp.ekoplayground.requests.ImmutableGetMessage;
+import com.ekoapp.ekoplayground.requests.ImmutableGetTopic;
 import com.ekoapp.ekoplayground.room.EkoDatabase;
-import com.ekoapp.ekoplayground.room.daos.MessageDao;
-import com.ekoapp.ekoplayground.room.entities.Message;
+import com.ekoapp.ekoplayground.room.daos.TopicDao;
+import com.ekoapp.ekoplayground.room.entities.Topic;
 import com.ekoapp.ekoplayground.socket.EkoSocket;
 import com.google.gson.JsonElement;
 
@@ -17,45 +16,44 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MessageListViewModel extends EkoViewModel {
+public class TopicListViewModel extends EkoViewModel {
 
-    public MessageListViewModel(@NonNull Application application) {
+    public TopicListViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public Flowable<PagedList<Message>> getMessage(String chatId) {
+    public Flowable<PagedList<Topic>> getTopic(String chatId) {
         int pageSize = 15;
 
         PagedList.Config config = new PagedList.Config.Builder()
                 .setPageSize(pageSize)
                 .build();
 
-        MessageDao messageDao = EkoDatabase.get()
-                .getMessageDao();
+        TopicDao topicDao = EkoDatabase.get()
+                .getTopicDao();
 
-        return new RxPagedListBuilder<>(messageDao.getMessage(chatId), config)
-                .setBoundaryCallback(new PagedList.BoundaryCallback<Message>() {
+        return new RxPagedListBuilder<>(topicDao.getTopic(chatId), config)
+                .setBoundaryCallback(new PagedList.BoundaryCallback<Topic>() {
                     @Override
                     public void onZeroItemsLoaded() {
-                        EkoSocket.call(ImmutableGetMessage.builder()
+                        EkoSocket.call(ImmutableGetTopic.builder()
                                 .chatId(chatId)
-                                .messageNumber(0)
-                                .direction(Direction.NEXT)
+                                .skip(0)
                                 .limit(pageSize)
                                 .build())
                                 .map(JsonElement::getAsJsonArray)
-                                .doOnSuccess(messageDao::insert)
+                                .doOnSuccess(topicDao::insert)
                                 .subscribeOn(Schedulers.io())
                                 .subscribe();
                     }
 
                     @Override
-                    public void onItemAtFrontLoaded(@NonNull Message itemAtFront) {
+                    public void onItemAtFrontLoaded(@NonNull Topic itemAtFront) {
 
                     }
 
                     @Override
-                    public void onItemAtEndLoaded(@NonNull Message itemAtEnd) {
+                    public void onItemAtEndLoaded(@NonNull Topic itemAtEnd) {
 
                     }
                 }).buildFlowable(BackpressureStrategy.BUFFER);

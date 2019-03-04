@@ -1,19 +1,44 @@
 package com.ekoapp.ekoplayground.room.entities;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.support.annotation.NonNull;
 
 import com.ekoapp.ekoplayground.models.MessageType;
 
-@Entity
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
+@Entity(primaryKeys = "id",
+        foreignKeys = @ForeignKey(entity = Topic.class,
+                parentColumns = "id",
+                childColumns = "topicId",
+                onDelete = CASCADE))
 public class Message extends EkoEntity {
+
+    @NonNull
+    private String topicId;
 
     @NonNull
     private MessageType type;
 
-    public Message(@NonNull String id, @NonNull MessageType type) {
-        super(id);
+    public Message() {
+    }
+
+    @Ignore
+    public Message(@NonNull String messageId, @NonNull String topicId, @NonNull MessageType type) {
+        super(messageId);
+        this.topicId = topicId;
         this.type = type;
+    }
+
+    @NonNull
+    public String getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(@NonNull String topicId) {
+        this.topicId = topicId;
     }
 
     @NonNull

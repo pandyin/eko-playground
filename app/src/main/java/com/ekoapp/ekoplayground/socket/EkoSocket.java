@@ -1,5 +1,7 @@
 package com.ekoapp.ekoplayground.socket;
 
+import android.util.Log;
+
 import com.ekoapp.ekoplayground.requests.EkoRequest;
 import com.ekoapp.ekoplayground.room.EkoDatabase;
 import com.google.common.base.Optional;
@@ -48,6 +50,7 @@ public class EkoSocket {
 
         String message = "41|" + jsonObject.toString();
         SOCKET.get().send(message);
+        Log.e("voipx", message);
 
         MaybeSubject<JsonElement> subject = MaybeSubject.create();
         MAP.put(ID, subject);
@@ -117,6 +120,7 @@ public class EkoSocket {
                     String[] array = text.split("\\|");
                     JsonParser parser = new JsonParser();
                     JsonObject json = parser.parse(array[1]).getAsJsonObject();
+                    Log.e("voipx", "json: " + json.toString());
 
                     if (json.has("id")) {
                         int id = json.get("id").getAsInt();
@@ -124,6 +128,7 @@ public class EkoSocket {
                         if (MAP.containsKey(id)) {
                             MaybeSubject<JsonElement> subject = MAP.get(id);
                             JsonArray p = json.get("p").getAsJsonArray();
+                            Log.e("voipx", json.toString());
 
                             if (p.get(0).isJsonNull()) {
                                 subject.onSuccess(p.get(1));

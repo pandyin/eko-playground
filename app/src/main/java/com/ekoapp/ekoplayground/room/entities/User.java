@@ -1,18 +1,21 @@
 package com.ekoapp.ekoplayground.room.entities;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.support.annotation.NonNull;
 
-import java.util.UUID;
-
-@Entity
+@Entity(primaryKeys = "id")
 public class User extends EkoEntity {
 
     @NonNull
     private String token;
 
-    public User(@NonNull String token) {
-        super(UUID.randomUUID().toString());
+    public User() {
+    }
+
+    @Ignore
+    public User(@NonNull String userId, @NonNull String token) {
+        super(userId);
         this.token = token;
     }
 

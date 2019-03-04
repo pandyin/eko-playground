@@ -1,18 +1,23 @@
 package com.ekoapp.ekoplayground.room.entities;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.support.annotation.NonNull;
 
 import com.ekoapp.ekoplayground.models.ChatType;
 
-@Entity
+@Entity(primaryKeys = "id")
 public class Chat extends EkoEntity {
 
     @NonNull
     private ChatType type;
 
-    public Chat(@NonNull String id, @NonNull ChatType type) {
-        super(id);
+    public Chat() {
+    }
+
+    @Ignore
+    public Chat(@NonNull String chatId, @NonNull ChatType type) {
+        super(chatId);
         this.type = type;
     }
 

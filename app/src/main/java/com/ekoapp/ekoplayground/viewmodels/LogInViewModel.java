@@ -36,7 +36,7 @@ public class LogInViewModel extends EkoViewModel {
 
         return EkoSocket.auth(username, password, UUID.randomUUID().toString())
                 .flatMap((Function<String, SingleSource<User>>) token -> {
-                    User user = new User(token);
+                    User user = new User(UUID.randomUUID().toString(), token);
                     userDao.insertUser(user);
                     return Single.just(user);
                 })
