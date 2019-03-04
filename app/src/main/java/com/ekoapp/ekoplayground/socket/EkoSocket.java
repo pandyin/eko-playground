@@ -13,7 +13,6 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.subjects.MaybeSubject;
@@ -57,13 +56,7 @@ public class EkoSocket {
         return subject;
     }
 
-    public static Completable connect(String username, String password, String deviceId) {
-        return auth(username, password, deviceId)
-                .doOnSuccess(EkoSocket::connect)
-                .ignoreElement();
-    }
-
-    private static Single<String> auth(String username, String password, String deviceId) {
+    public static Single<String> auth(String username, String password, String deviceId) {
         return Single.fromCallable(() -> {
             MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
             JsonObject json = new JsonObject();
@@ -95,7 +88,7 @@ public class EkoSocket {
         });
     }
 
-    private static void connect(String token) {
+    public static void connect(String token) {
         Request request = new Request.Builder()
                 .url(String.format("ws://staging-s1.dev.ekoapp.com/v2?token=%s", token))
                 .build();

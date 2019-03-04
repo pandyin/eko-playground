@@ -39,18 +39,25 @@ public class LogInActivity extends EkoActivity {
                 .as(AutoDispose.autoDisposable(this))
                 .subscribe();
 
-        logIn.setOnClickListener(v -> {
-            LogInViewModel viewModel = ViewModelProviders.of(this)
-                    .get(LogInViewModel.class);
+        LogInViewModel viewModel = ViewModelProviders.of(this)
+                .get(LogInViewModel.class);
 
-            viewModel.logIn(username.getText().toString(), password.getText().toString())
-                    .doOnComplete(() -> {
-                        startActivity(new ChatListIntent(this));
-                        finish();
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .as(AutoDispose.autoDisposable(this))
-                    .subscribe();
-        });
+        viewModel.logIn()
+                .doOnSuccess(user -> {
+                    startActivity(new ChatListIntent(this));
+                    finish();
+                })
+                .subscribeOn(Schedulers.io())
+                .as(AutoDispose.autoDisposable(this))
+                .subscribe();
+
+        logIn.setOnClickListener(v -> viewModel.logIn(username.getText().toString(), password.getText().toString())
+                .doOnSuccess(user -> {
+                    startActivity(new ChatListIntent(this));
+                    finish();
+                })
+                .subscribeOn(Schedulers.io())
+                .as(AutoDispose.autoDisposable(this))
+                .subscribe());
     }
 }
