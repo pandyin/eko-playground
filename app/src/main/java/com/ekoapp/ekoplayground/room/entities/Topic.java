@@ -21,8 +21,8 @@ public class Topic extends EkoEntity {
     }
 
     @Ignore
-    public Topic(@NonNull String topicId, @NonNull String chatId) {
-        super(topicId);
+    public Topic(@NonNull String topicId, @NonNull String data, @NonNull String chatId) {
+        super(topicId, data);
         this.chatId = chatId;
     }
 

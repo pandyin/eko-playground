@@ -1,5 +1,6 @@
 package com.ekoapp.ekoplayground.requests;
 
+import com.ekoapp.ekoplayground.models.ChatType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -17,8 +18,8 @@ public interface GetChat extends EkoRequest {
     @Override
     default JsonElement getParam1() {
         JsonArray jsonArray = new JsonArray();
-        jsonArray.add("direct_chatv2");
-        jsonArray.add("group_chatv2");
+        jsonArray.add(ChatType.DIRECT.getApiKey());
+        jsonArray.add(ChatType.GROUP.getApiKey());
         return jsonArray;
     }
 

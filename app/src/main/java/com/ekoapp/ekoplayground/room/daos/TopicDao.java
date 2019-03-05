@@ -12,7 +12,7 @@ import com.google.gson.JsonObject;
 @Dao
 public abstract class TopicDao extends EkoDao<Topic> {
 
-    @Query("select * from topic where chatId =:chatId")
+    @Query("select * from topic where chatId =:chatId order by lastUpdated DESC")
     public abstract DataSource.Factory<Integer, Topic> getTopic(String chatId);
 
     @Transaction
@@ -20,6 +20,7 @@ public abstract class TopicDao extends EkoDao<Topic> {
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject topic = jsonArray.get(i).getAsJsonObject();
             insert(new Topic(topic.get("_id").getAsString(),
+                    topic.get("name").getAsString(),
                     topic.get("gid").getAsString()));
         }
     }

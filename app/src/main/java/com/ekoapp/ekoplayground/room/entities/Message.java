@@ -26,8 +26,8 @@ public class Message extends EkoEntity {
     }
 
     @Ignore
-    public Message(@NonNull String messageId, @NonNull String topicId, @NonNull MessageType type) {
-        super(messageId);
+    public Message(@NonNull String messageId, @NonNull String data, @NonNull String topicId, @NonNull MessageType type) {
+        super(messageId, data);
         this.topicId = topicId;
         this.type = type;
     }

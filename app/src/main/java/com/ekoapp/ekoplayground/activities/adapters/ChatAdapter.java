@@ -13,7 +13,7 @@ public class ChatAdapter extends EkoAdapter<Chat> {
     }
 
     @Override
-    void onItemSelected(Chat entity) {
+    void onItemSelected(@NonNull Chat entity) {
         getContext().startActivity(new TopicListIntent(getContext(), entity.getId()));
     }
 }

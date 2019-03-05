@@ -12,7 +12,7 @@ public class MessageAdapter extends EkoAdapter<Message> {
     }
 
     @Override
-    void onItemSelected(Message entity) {
+    void onItemSelected(@NonNull Message entity) {
 
     }
 }

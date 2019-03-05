@@ -7,6 +7,7 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.ekoapp.ekoplayground.room.converters.ChatTypeConverter;
+import com.ekoapp.ekoplayground.room.converters.DateTimeConverter;
 import com.ekoapp.ekoplayground.room.converters.MessageTypeConverter;
 import com.ekoapp.ekoplayground.room.daos.ChatDao;
 import com.ekoapp.ekoplayground.room.daos.MessageDao;
@@ -19,7 +20,7 @@ import com.ekoapp.ekoplayground.room.entities.User;
 
 
 @Database(version = 1, entities = {Chat.class, Message.class, Topic.class, User.class}, exportSchema = false)
-@TypeConverters({ChatTypeConverter.class, MessageTypeConverter.class})
+@TypeConverters({ChatTypeConverter.class, DateTimeConverter.class, MessageTypeConverter.class})
 public abstract class EkoDatabase extends RoomDatabase {
 
     private static volatile EkoDatabase INSTANCE;

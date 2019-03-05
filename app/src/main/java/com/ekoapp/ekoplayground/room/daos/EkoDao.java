@@ -6,16 +6,35 @@ import android.arch.persistence.room.Update;
 
 import com.ekoapp.ekoplayground.room.entities.EkoEntity;
 
+import org.joda.time.DateTime;
+
 import java.util.List;
 
-public abstract class EkoDao<ENTITY extends EkoEntity> {
+abstract class EkoDao<ENTITY extends EkoEntity> {
 
     @Update
-    abstract void update(ENTITY entity);
+    abstract void updateImpl(ENTITY entity);
+
+    public void update(ENTITY entity) {
+        entity.setLastUpdated(DateTime.now());
+        updateImpl(entity);
+    }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract void insert(ENTITY entity);
+    abstract void insertImpl(ENTITY entity);
+
+    public void insert(ENTITY entity) {
+        entity.setLastUpdated(DateTime.now());
+        insertImpl(entity);
+    }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract void insert(List<ENTITY> entities);
+    abstract void insertImpl(List<ENTITY> entities);
+
+    public void insert(List<ENTITY> entities) {
+        for (ENTITY entity : entities) {
+            entity.setLastUpdated(DateTime.now());
+        }
+        insertImpl(entities);
+    }
 }

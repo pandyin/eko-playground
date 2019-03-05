@@ -14,7 +14,7 @@ public abstract class EkoAdapter<ENTITY extends EkoEntity> extends PagedListAdap
     @NonNull
     private final Context context;
 
-    public EkoAdapter(@NonNull Context context) {
+    EkoAdapter(@NonNull Context context) {
         super(new EkoItemCallback<>());
         this.context = context;
     }
@@ -28,11 +28,11 @@ public abstract class EkoAdapter<ENTITY extends EkoEntity> extends PagedListAdap
 
     @Override
     public void onBindViewHolder(@NonNull EkoViewHolder holder, int position) {
-        ((TextView) holder.itemView.findViewById(android.R.id.text1)).setText(getItem(position).getId());
+        ((TextView) holder.itemView.findViewById(android.R.id.text1)).setText(getItem(position).getData());
         ((TextView) holder.itemView.findViewById(android.R.id.text1)).setOnClickListener(v -> onItemSelected(getItem(position)));
     }
 
-    abstract void onItemSelected(ENTITY entity);
+    abstract void onItemSelected(@NonNull ENTITY entity);
 
     @NonNull
     Context getContext() {

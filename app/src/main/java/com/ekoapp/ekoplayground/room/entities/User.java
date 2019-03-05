@@ -14,8 +14,8 @@ public class User extends EkoEntity {
     }
 
     @Ignore
-    public User(@NonNull String userId, @NonNull String token) {
-        super(userId);
+    public User(@NonNull String userId, @NonNull String data, @NonNull String token) {
+        super(userId, data);
         this.token = token;
     }
 

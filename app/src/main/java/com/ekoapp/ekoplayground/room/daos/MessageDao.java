@@ -21,6 +21,7 @@ public abstract class MessageDao extends EkoDao<Message> {
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject message = jsonArray.get(i).getAsJsonObject();
             insert(new Message(message.get("_id").getAsString(),
+                    message.get("data").getAsString(),
                     message.get("tid").getAsString(),
                     MessageType.TEXT));
         }

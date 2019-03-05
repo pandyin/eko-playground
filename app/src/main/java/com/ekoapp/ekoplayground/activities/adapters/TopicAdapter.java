@@ -13,7 +13,7 @@ public class TopicAdapter extends EkoAdapter<Topic> {
     }
 
     @Override
-    void onItemSelected(Topic entity) {
+    void onItemSelected(@NonNull Topic entity) {
         getContext().startActivity(new MessageListIntent(getContext(), entity.getId()));
     }
 }

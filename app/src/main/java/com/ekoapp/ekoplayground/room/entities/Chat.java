@@ -16,8 +16,8 @@ public class Chat extends EkoEntity {
     }
 
     @Ignore
-    public Chat(@NonNull String chatId, @NonNull ChatType type) {
-        super(chatId);
+    public Chat(@NonNull String chatId, @NonNull String data, @NonNull ChatType type) {
+        super(chatId, data);
         this.type = type;
     }
 

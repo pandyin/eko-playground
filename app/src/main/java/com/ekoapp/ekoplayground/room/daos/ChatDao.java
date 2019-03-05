@@ -7,13 +7,14 @@ import android.arch.persistence.room.Transaction;
 
 import com.ekoapp.ekoplayground.models.ChatType;
 import com.ekoapp.ekoplayground.room.entities.Chat;
+import com.google.common.base.Objects;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 @Dao
 public abstract class ChatDao extends EkoDao<Chat> {
 
-    @Query("select * from chat")
+    @Query("select * from chat order by lastUpdated DESC")
     public abstract DataSource.Factory<Integer, Chat> getChat();
 
     @Transaction
@@ -21,8 +22,16 @@ public abstract class ChatDao extends EkoDao<Chat> {
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
             JsonObject chat = jsonObject.get("group").getAsJsonObject();
-            insert(new Chat(chat.get("_id").getAsString(),
-                    ChatType.DIRECT));
+
+            if (Objects.equal(ChatType.DIRECT, ChatType.fromApikey(chat.get("type").getAsString()))) {
+                insert(new Chat(chat.get("_id").getAsString(),
+                        "direct",
+                        ChatType.DIRECT));
+            } else {
+                insert(new Chat(chat.get("_id").getAsString(),
+                        chat.get("name").getAsString(),
+                        ChatType.GROUP));
+            }
         }
     }
 }
