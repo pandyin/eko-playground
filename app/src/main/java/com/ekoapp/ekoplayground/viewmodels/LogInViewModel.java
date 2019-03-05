@@ -12,8 +12,6 @@ import java.util.UUID;
 
 import io.reactivex.Maybe;
 import io.reactivex.Single;
-import io.reactivex.SingleSource;
-import io.reactivex.functions.Function;
 
 public class LogInViewModel extends EkoViewModel {
 
@@ -35,7 +33,7 @@ public class LogInViewModel extends EkoViewModel {
                 .getUserDao();
 
         return EkoSocket.auth(username, password, UUID.randomUUID().toString())
-                .flatMap((Function<String, SingleSource<User>>) token -> {
+                .flatMap(token -> {
                     User user = new User(UUID.randomUUID().toString(),
                             username,
                             token);
