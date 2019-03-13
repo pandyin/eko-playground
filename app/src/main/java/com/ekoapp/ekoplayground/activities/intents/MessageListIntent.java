@@ -4,14 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
-import com.ekoapp.ekoplayground.activities.MessageListActivity;
+import com.ekoapp.ekoplayground.activities.MessageActivity;
 
-public class MessageListIntent extends EkoIntent<MessageListActivity> {
+public class MessageListIntent extends EkoIntent<MessageActivity> {
 
     private static final String TOPIC_ID = "topic_id";
 
     public MessageListIntent(@NonNull Context context, @NonNull String topicId) {
-        super(context, MessageListActivity.class);
+        super(context, MessageActivity.class);
         putExtra(TOPIC_ID, topicId);
     }
 

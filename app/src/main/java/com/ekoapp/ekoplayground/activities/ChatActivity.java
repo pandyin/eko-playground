@@ -7,33 +7,32 @@ import android.support.v7.widget.RecyclerView;
 
 import com.ekoapp.ekoplayground.R;
 import com.ekoapp.ekoplayground.R2;
-import com.ekoapp.ekoplayground.activities.adapters.MessageAdapter;
-import com.ekoapp.ekoplayground.activities.intents.MessageListIntent;
-import com.ekoapp.ekoplayground.viewmodels.MessageListViewModel;
+import com.ekoapp.ekoplayground.activities.adapters.ChatAdapter;
+import com.ekoapp.ekoplayground.viewmodels.ChatViewModel;
 import com.uber.autodispose.AutoDispose;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MessageListActivity extends EkoActivity {
+public class ChatActivity extends EkoActivity {
 
-    @BindView(R2.id.message_list_recycler_view)
-    RecyclerView messageList;
+    @BindView(R2.id.chat_recycler_view)
+    RecyclerView chatList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message_list);
+        setContentView(R.layout.activity_chat);
 
-        MessageListViewModel viewModel = ViewModelProviders.of(this)
-                .get(MessageListViewModel.class);
+        ChatViewModel viewModel = ViewModelProviders.of(this)
+                .get(ChatViewModel.class);
 
-        MessageAdapter adapter = new MessageAdapter(this);
-        messageList.setAdapter(adapter);
-        messageList.setLayoutManager(new LinearLayoutManager(this));
+        ChatAdapter adapter = new ChatAdapter(this);
+        chatList.setAdapter(adapter);
+        chatList.setLayoutManager(new LinearLayoutManager(this));
 
-        viewModel.getMessage(MessageListIntent.getTopicId(getIntent()))
+        viewModel.getChat()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(adapter::submitList)
                 .subscribeOn(Schedulers.io())

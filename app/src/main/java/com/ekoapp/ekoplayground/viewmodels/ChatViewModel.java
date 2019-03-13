@@ -16,9 +16,9 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ChatListViewModel extends EkoViewModel {
+public class ChatViewModel extends EkoViewModel {
 
-    public ChatListViewModel(@NonNull Application application) {
+    public ChatViewModel(@NonNull Application application) {
         super(application);
     }
 

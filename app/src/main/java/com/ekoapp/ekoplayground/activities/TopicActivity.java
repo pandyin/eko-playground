@@ -9,25 +9,25 @@ import com.ekoapp.ekoplayground.R;
 import com.ekoapp.ekoplayground.R2;
 import com.ekoapp.ekoplayground.activities.adapters.TopicAdapter;
 import com.ekoapp.ekoplayground.activities.intents.TopicListIntent;
-import com.ekoapp.ekoplayground.viewmodels.TopicListViewModel;
+import com.ekoapp.ekoplayground.viewmodels.TopicViewModel;
 import com.uber.autodispose.AutoDispose;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class TopicListActivity extends EkoActivity {
+public class TopicActivity extends EkoActivity {
 
-    @BindView(R2.id.chat_list_recycler_view)
+    @BindView(R2.id.chat_recycler_view)
     RecyclerView chatList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_list);
+        setContentView(R.layout.activity_chat);
 
-        TopicListViewModel viewModel = ViewModelProviders.of(this)
-                .get(TopicListViewModel.class);
+        TopicViewModel viewModel = ViewModelProviders.of(this)
+                .get(TopicViewModel.class);
 
         TopicAdapter adapter = new TopicAdapter(this);
         chatList.setAdapter(adapter);
