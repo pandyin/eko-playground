@@ -1,15 +1,15 @@
 package com.ekoapp.ekoplayground.presenters;
 
-import com.ekoapp.ekoplayground.contract.MessageContract;
-import com.ekoapp.ekoplayground.viewmodels.MessageViewModel;
+import com.ekoapp.ekoplayground.contract.ChatContract;
+import com.ekoapp.ekoplayground.viewmodels.ChatViewModel;
 import com.uber.autodispose.AutoDispose;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MessagePresenter extends EkoPresenter<MessageViewModel, MessageContract> {
+public class ChatPresenter extends EkoPresenter<ChatViewModel, ChatContract> {
 
-    public MessagePresenter(MessageViewModel viewModel, MessageContract contract) {
+    public ChatPresenter(ChatViewModel viewModel, ChatContract contract) {
         super(viewModel, contract);
     }
 

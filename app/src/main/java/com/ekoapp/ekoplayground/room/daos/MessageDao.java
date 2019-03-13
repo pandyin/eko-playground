@@ -13,8 +13,13 @@ import com.google.gson.JsonObject;
 @Dao
 public abstract class MessageDao extends EkoDao<Message> {
 
-    @Query("select * from message where topicId =:topicId")
-    public abstract DataSource.Factory<Integer, Message> getMessage(String topicId);
+    @Override
+    public DataSource.Factory<Integer, Message> getDataSourceFactory(String id) {
+        return getDataSourceFactoryImpl(id);
+    }
+
+    @Query("select * from message where topicId =:id")
+    abstract DataSource.Factory<Integer, Message> getDataSourceFactoryImpl(String id);
 
     @Transaction
     public void insert(JsonArray jsonArray) {

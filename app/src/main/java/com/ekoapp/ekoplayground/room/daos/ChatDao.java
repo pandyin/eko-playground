@@ -14,8 +14,13 @@ import com.google.gson.JsonObject;
 @Dao
 public abstract class ChatDao extends EkoDao<Chat> {
 
+    @Override
+    public DataSource.Factory<Integer, Chat> getDataSourceFactory(String id) {
+        return getDataSourceFactoryImpl();
+    }
+
     @Query("select * from chat order by lastUpdated DESC")
-    public abstract DataSource.Factory<Integer, Chat> getChat();
+    abstract DataSource.Factory<Integer, Chat> getDataSourceFactoryImpl();
 
     @Transaction
     public void insert(JsonArray jsonArray) {

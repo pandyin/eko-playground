@@ -12,8 +12,13 @@ import com.google.gson.JsonObject;
 @Dao
 public abstract class TopicDao extends EkoDao<Topic> {
 
-    @Query("select * from topic where chatId =:chatId order by lastUpdated DESC")
-    public abstract DataSource.Factory<Integer, Topic> getTopic(String chatId);
+    @Override
+    public DataSource.Factory<Integer, Topic> getDataSourceFactory(String id) {
+        return getDataSourceFactoryImpl(id);
+    }
+
+    @Query("select * from topic where chatId =:id order by lastUpdated DESC")
+    abstract DataSource.Factory<Integer, Topic> getDataSourceFactoryImpl(String id);
 
     @Transaction
     public void insert(JsonArray jsonArray) {

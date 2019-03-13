@@ -1,6 +1,7 @@
 package com.ekoapp.ekoplayground.viewmodels;
 
 import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.support.annotation.NonNull;
 
 import com.ekoapp.ekoplayground.room.EkoDatabase;
@@ -13,7 +14,7 @@ import java.util.UUID;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
 
-public class LogInViewModel extends EkoViewModel {
+public class LogInViewModel extends AndroidViewModel {
 
     public LogInViewModel(@NonNull Application application) {
         super(application);

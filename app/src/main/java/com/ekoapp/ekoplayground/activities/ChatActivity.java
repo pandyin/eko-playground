@@ -1,6 +1,7 @@
 package com.ekoapp.ekoplayground.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,35 +9,46 @@ import android.support.v7.widget.RecyclerView;
 import com.ekoapp.ekoplayground.R;
 import com.ekoapp.ekoplayground.R2;
 import com.ekoapp.ekoplayground.activities.adapters.ChatAdapter;
+import com.ekoapp.ekoplayground.contract.ChatContract;
+import com.ekoapp.ekoplayground.presenters.ChatPresenter;
+import com.ekoapp.ekoplayground.room.entities.Chat;
 import com.ekoapp.ekoplayground.viewmodels.ChatViewModel;
-import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.ScopeProvider;
 
 import butterknife.BindView;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
-public class ChatActivity extends EkoActivity {
+public class ChatActivity extends EkoActivity implements ChatContract {
 
     @BindView(R2.id.chat_recycler_view)
     RecyclerView chatList;
+
+    private ChatPresenter presenter;
+    private ChatAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        ChatViewModel viewModel = ViewModelProviders.of(this)
-                .get(ChatViewModel.class);
+        ChatViewModel viewModel = ViewModelProviders.of(this).get(ChatViewModel.class);
+        presenter = new ChatPresenter(viewModel, this);
+        presenter.test(null);
+    }
 
-        ChatAdapter adapter = new ChatAdapter(this);
+    @Override
+    public ScopeProvider getScopeProvider() {
+        return this;
+    }
+
+    @Override
+    public void setupList() {
+        adapter = new ChatAdapter(this);
         chatList.setAdapter(adapter);
         chatList.setLayoutManager(new LinearLayoutManager(this));
+    }
 
-        viewModel.getChat()
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(adapter::submitList)
-                .subscribeOn(Schedulers.io())
-                .as(AutoDispose.autoDisposable(this))
-                .subscribe();
+    @Override
+    public void submitList(PagedList<Chat> list) {
+        adapter.submitList(list);
     }
 }

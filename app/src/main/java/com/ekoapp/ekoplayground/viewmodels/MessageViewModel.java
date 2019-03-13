@@ -10,16 +10,14 @@ import com.ekoapp.ekoplayground.usecases.MessageGetPagedListUseCase;
 
 import io.reactivex.Flowable;
 
-public class MessageViewModel extends EkoViewModel {
-
-    private final MessageGetPagedListUseCase useCase;
+public class MessageViewModel extends EkoViewModel<Message> {
 
     public MessageViewModel(@NonNull Application application) {
         super(application);
-        useCase = new MessageGetPagedListUseCase(new MessageRepository());
     }
 
-    public Flowable<PagedList<Message>> getMessage(String topicId) {
-        return useCase.execute(topicId);
+    @Override
+    public Flowable<PagedList<Message>> getPagedList(String id) {
+        return new MessageGetPagedListUseCase(new MessageRepository()).execute(id);
     }
 }

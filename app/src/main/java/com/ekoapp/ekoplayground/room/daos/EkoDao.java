@@ -1,5 +1,6 @@
 package com.ekoapp.ekoplayground.room.daos;
 
+import android.arch.paging.DataSource;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Update;
@@ -10,7 +11,7 @@ import org.joda.time.DateTime;
 
 import java.util.List;
 
-abstract class EkoDao<ENTITY extends EkoEntity> {
+public abstract class EkoDao<ENTITY extends EkoEntity> {
 
     @Update
     abstract void updateImpl(ENTITY entity);
@@ -36,5 +37,9 @@ abstract class EkoDao<ENTITY extends EkoEntity> {
             entity.setLastUpdated(DateTime.now());
         }
         insertImpl(entities);
+    }
+
+    public DataSource.Factory<Integer, ENTITY> getDataSourceFactory(String id) {
+        return null;
     }
 }
