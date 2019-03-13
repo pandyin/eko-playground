@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import com.ekoapp.ekoplayground.R;
 import com.ekoapp.ekoplayground.R2;
 import com.ekoapp.ekoplayground.activities.adapters.TopicAdapter;
-import com.ekoapp.ekoplayground.activities.intents.TopicListIntent;
+import com.ekoapp.ekoplayground.activities.intents.TopicIntent;
 import com.ekoapp.ekoplayground.viewmodels.TopicViewModel;
 import com.uber.autodispose.AutoDispose;
 
@@ -33,7 +33,7 @@ public class TopicActivity extends EkoActivity {
         chatList.setAdapter(adapter);
         chatList.setLayoutManager(new LinearLayoutManager(this));
 
-        viewModel.getTopic(TopicListIntent.getChatId(getIntent()))
+        viewModel.getTopic(TopicIntent.getChatId(getIntent()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(adapter::submitList)
                 .subscribeOn(Schedulers.io())

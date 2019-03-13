@@ -6,11 +6,11 @@ import android.support.annotation.NonNull;
 
 import com.ekoapp.ekoplayground.activities.TopicActivity;
 
-public class TopicListIntent extends EkoIntent<TopicActivity> {
+public class TopicIntent extends EkoIntent<TopicActivity> {
 
     private static final String CHAT_ID = "chat_id";
 
-    public TopicListIntent(@NonNull Context context, @NonNull String chatId) {
+    public TopicIntent(@NonNull Context context, @NonNull String chatId) {
         super(context, TopicActivity.class);
         putExtra(CHAT_ID, chatId);
     }

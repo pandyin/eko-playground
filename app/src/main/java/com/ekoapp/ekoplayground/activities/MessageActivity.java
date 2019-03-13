@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import com.ekoapp.ekoplayground.R;
 import com.ekoapp.ekoplayground.R2;
 import com.ekoapp.ekoplayground.activities.adapters.MessageAdapter;
-import com.ekoapp.ekoplayground.activities.intents.MessageListIntent;
+import com.ekoapp.ekoplayground.activities.intents.MessageIntent;
 import com.ekoapp.ekoplayground.contract.MessageContract;
 import com.ekoapp.ekoplayground.presenters.MessagePresenter;
 import com.ekoapp.ekoplayground.room.entities.Message;
@@ -33,7 +33,7 @@ public class MessageActivity extends EkoActivity implements MessageContract {
 
         MessageViewModel viewModel = ViewModelProviders.of(this).get(MessageViewModel.class);
         presenter = new MessagePresenter(viewModel, this);
-        presenter.test(MessageListIntent.getTopicId(getIntent()));
+        presenter.test(MessageIntent.getTopicId(getIntent()));
     }
 
     @Override

@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.ekoapp.ekoplayground.R;
 import com.ekoapp.ekoplayground.R2;
-import com.ekoapp.ekoplayground.activities.intents.ChatListIntent;
+import com.ekoapp.ekoplayground.activities.intents.ChatIntent;
 import com.ekoapp.ekoplayground.room.entities.User;
 import com.ekoapp.ekoplayground.viewmodels.LogInViewModel;
 import com.jakewharton.rxbinding3.widget.RxTextView;
@@ -45,7 +45,7 @@ public class LogInActivity extends EkoActivity {
                 .get(LogInViewModel.class);
 
         Consumer<User> logInConsumer = user -> {
-            startActivity(new ChatListIntent(this));
+            startActivity(new ChatIntent(this));
             finish();
         };
 
