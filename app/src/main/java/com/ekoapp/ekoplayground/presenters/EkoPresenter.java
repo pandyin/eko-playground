@@ -12,5 +12,10 @@ public abstract class EkoPresenter<VM extends AndroidViewModel, CONTRACT extends
     EkoPresenter(VM viewModel, CONTRACT contract) {
         this.viewModel = viewModel;
         this.contract = contract;
+        init();
+    }
+
+    private void init() {
+        contract.setupList();
     }
 }

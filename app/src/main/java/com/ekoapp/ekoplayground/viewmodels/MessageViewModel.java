@@ -5,6 +5,7 @@ import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 
 import com.ekoapp.ekoplayground.repositories.MessageRepository;
+import com.ekoapp.ekoplayground.room.EkoDatabase;
 import com.ekoapp.ekoplayground.room.entities.Message;
 import com.ekoapp.ekoplayground.usecases.MessageGetPagedListUseCase;
 
@@ -18,6 +19,6 @@ public class MessageViewModel extends EkoViewModel<Message> {
 
     @Override
     public Flowable<PagedList<Message>> getPagedList(String id) {
-        return new MessageGetPagedListUseCase(new MessageRepository()).execute(id);
+        return new MessageGetPagedListUseCase(new MessageRepository(EkoDatabase.get().getMessageDao())).execute(id);
     }
 }

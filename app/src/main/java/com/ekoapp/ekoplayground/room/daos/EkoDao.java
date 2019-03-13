@@ -6,6 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Update;
 
 import com.ekoapp.ekoplayground.room.entities.EkoEntity;
+import com.google.gson.JsonArray;
 
 import org.joda.time.DateTime;
 
@@ -37,6 +38,10 @@ public abstract class EkoDao<ENTITY extends EkoEntity> {
             entity.setLastUpdated(DateTime.now());
         }
         insertImpl(entities);
+    }
+
+    public void insert(JsonArray jsonArray) {
+
     }
 
     public DataSource.Factory<Integer, ENTITY> getDataSourceFactory(String id) {

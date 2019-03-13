@@ -1,11 +1,13 @@
 package com.ekoapp.ekoplayground.repositories;
 
-import com.ekoapp.ekoplayground.room.EkoDatabase;
+import com.ekoapp.ekoplayground.datasource.local.MessageLocalDataStore;
+import com.ekoapp.ekoplayground.datasource.remote.MessageRemoteDataStore;
+import com.ekoapp.ekoplayground.room.daos.MessageDao;
 import com.ekoapp.ekoplayground.room.entities.Message;
 
 public class MessageRepository extends EkoRepository<Message> {
 
-    public MessageRepository() {
-        super(EkoDatabase.get().getMessageDao());
+    public MessageRepository(MessageDao dao) {
+        super(new MessageLocalDataStore(dao), new MessageRemoteDataStore(dao));
     }
 }

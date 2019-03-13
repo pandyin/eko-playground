@@ -5,6 +5,7 @@ import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 
 import com.ekoapp.ekoplayground.repositories.ChatRepository;
+import com.ekoapp.ekoplayground.room.EkoDatabase;
 import com.ekoapp.ekoplayground.room.entities.Chat;
 import com.ekoapp.ekoplayground.usecases.ChatGetPagedListUseCase;
 
@@ -18,6 +19,6 @@ public class ChatViewModel extends EkoViewModel<Chat> {
 
     @Override
     public Flowable<PagedList<Chat>> getPagedList(String id) {
-        return new ChatGetPagedListUseCase(new ChatRepository()).execute(id);
+        return new ChatGetPagedListUseCase(new ChatRepository(EkoDatabase.get().getChatDao())).execute(id);
     }
 }

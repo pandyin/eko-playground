@@ -4,7 +4,8 @@ import android.arch.paging.PagedList;
 import android.arch.paging.RxPagedListBuilder;
 import android.support.annotation.NonNull;
 
-import com.ekoapp.ekoplayground.room.daos.EkoDao;
+import com.ekoapp.ekoplayground.datasource.local.LocalDataStore;
+import com.ekoapp.ekoplayground.datasource.remote.RemoteDataStore;
 import com.ekoapp.ekoplayground.room.entities.EkoEntity;
 
 import io.reactivex.BackpressureStrategy;
@@ -12,10 +13,12 @@ import io.reactivex.Flowable;
 
 public abstract class EkoRepository<ENTITY extends EkoEntity> {
 
-    private EkoDao<ENTITY> dao;
+    private LocalDataStore<ENTITY> local;
+    private RemoteDataStore<ENTITY> remote;
 
-    EkoRepository(EkoDao<ENTITY> dao) {
-        this.dao = dao;
+    EkoRepository(LocalDataStore<ENTITY> local, RemoteDataStore<ENTITY> remote) {
+        this.local = local;
+        this.remote = remote;
     }
 
     public Flowable<PagedList<ENTITY>> getPagedList(String id) {
@@ -25,11 +28,11 @@ public abstract class EkoRepository<ENTITY extends EkoEntity> {
                 .setPageSize(pageSize)
                 .build();
 
-        return new RxPagedListBuilder<>(dao.getDataSourceFactory(id), config)
+        return new RxPagedListBuilder<>(local.getFactory(id), config)
                 .setBoundaryCallback(new PagedList.BoundaryCallback<ENTITY>() {
                     @Override
                     public void onZeroItemsLoaded() {
-
+                        remote.queryFirstPage();
                     }
 
                     @Override

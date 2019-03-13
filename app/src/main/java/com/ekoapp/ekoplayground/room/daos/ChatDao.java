@@ -15,13 +15,6 @@ import com.google.gson.JsonObject;
 public abstract class ChatDao extends EkoDao<Chat> {
 
     @Override
-    public DataSource.Factory<Integer, Chat> getDataSourceFactory(String id) {
-        return getDataSourceFactoryImpl();
-    }
-
-    @Query("select * from chat order by lastUpdated DESC")
-    abstract DataSource.Factory<Integer, Chat> getDataSourceFactoryImpl();
-
     @Transaction
     public void insert(JsonArray jsonArray) {
         for (int i = 0; i < jsonArray.size(); i++) {
@@ -39,4 +32,12 @@ public abstract class ChatDao extends EkoDao<Chat> {
             }
         }
     }
+
+    @Override
+    public DataSource.Factory<Integer, Chat> getDataSourceFactory(String id) {
+        return getDataSourceFactoryImpl();
+    }
+
+    @Query("select * from chat order by lastUpdated DESC")
+    abstract DataSource.Factory<Integer, Chat> getDataSourceFactoryImpl();
 }

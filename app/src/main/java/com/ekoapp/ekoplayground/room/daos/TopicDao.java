@@ -13,13 +13,6 @@ import com.google.gson.JsonObject;
 public abstract class TopicDao extends EkoDao<Topic> {
 
     @Override
-    public DataSource.Factory<Integer, Topic> getDataSourceFactory(String id) {
-        return getDataSourceFactoryImpl(id);
-    }
-
-    @Query("select * from topic where chatId =:id order by lastUpdated DESC")
-    abstract DataSource.Factory<Integer, Topic> getDataSourceFactoryImpl(String id);
-
     @Transaction
     public void insert(JsonArray jsonArray) {
         for (int i = 0; i < jsonArray.size(); i++) {
@@ -29,4 +22,12 @@ public abstract class TopicDao extends EkoDao<Topic> {
                     topic.get("gid").getAsString()));
         }
     }
+
+    @Override
+    public DataSource.Factory<Integer, Topic> getDataSourceFactory(String id) {
+        return getDataSourceFactoryImpl(id);
+    }
+
+    @Query("select * from topic where chatId =:id order by lastUpdated DESC")
+    abstract DataSource.Factory<Integer, Topic> getDataSourceFactoryImpl(String id);
 }
