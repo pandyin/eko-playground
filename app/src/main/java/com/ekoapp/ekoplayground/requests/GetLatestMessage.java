@@ -1,25 +1,22 @@
 package com.ekoapp.ekoplayground.requests;
 
-import com.ekoapp.ekoplayground.models.Direction;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import org.immutables.value.Value;
 
 @Value.Immutable
-public interface GetMessage extends EkoRequest {
+public interface GetLatestMessage extends EkoRequest {
 
     @Override
     default String getMethod() {
-        return "v1/message.findByThreadSegment";
+        return "v1/message.getLatestMessages";
     }
 
     @Override
     default JsonElement getParam1() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("tid", getTopicId());
-        jsonObject.addProperty("threadSegment", getSkip());
-        jsonObject.addProperty("direction", Direction.PREVIOUS.getApiKey());
         jsonObject.addProperty("limit", getLimit());
         return jsonObject;
     }
@@ -30,8 +27,6 @@ public interface GetMessage extends EkoRequest {
     }
 
     String getTopicId();
-
-    int getSkip();
 
     int getLimit();
 }

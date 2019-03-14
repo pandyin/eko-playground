@@ -6,19 +6,24 @@ import android.support.annotation.NonNull;
 
 import com.ekoapp.ekoplayground.models.ChatType;
 
+import org.joda.time.DateTime;
+
 @Entity(primaryKeys = "id")
 public class Chat extends EkoEntity {
 
     @NonNull
     private ChatType type;
 
+    private DateTime lastActivity;
+
     public Chat() {
     }
 
     @Ignore
-    public Chat(@NonNull String chatId, @NonNull String data, @NonNull ChatType type) {
-        super(chatId, data);
+    public Chat(@NonNull String id, @NonNull String data, @NonNull ChatType type, DateTime lastActivity) {
+        super(id, data);
         this.type = type;
+        this.lastActivity = lastActivity;
     }
 
     @NonNull
@@ -28,5 +33,13 @@ public class Chat extends EkoEntity {
 
     public void setType(@NonNull ChatType type) {
         this.type = type;
+    }
+
+    public DateTime getLastActivity() {
+        return lastActivity;
+    }
+
+    public void setLastActivity(DateTime lastActivity) {
+        this.lastActivity = lastActivity;
     }
 }

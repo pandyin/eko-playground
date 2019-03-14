@@ -45,7 +45,10 @@ public class MessageActivity extends EkoActivity implements MessageContract {
     public void setupList() {
         adapter = new MessageAdapter(this);
         messageList.setAdapter(adapter);
-        messageList.setLayoutManager(new LinearLayoutManager(this));
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(true);
+        messageList.setLayoutManager(layoutManager);
     }
 
     @Override

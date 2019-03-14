@@ -12,7 +12,7 @@ public class ChatRemoteDataStore extends RemoteDataStore<Chat> {
     }
 
     @Override
-    EkoRequest getFirstPageRequest() {
+    EkoRequest getFirstPageRequest(String id) {
         return ImmutableGetChat.builder()
                 .skip(0)
                 .limit(15)

@@ -32,7 +32,7 @@ public abstract class EkoRepository<ENTITY extends EkoEntity> {
                 .setBoundaryCallback(new PagedList.BoundaryCallback<ENTITY>() {
                     @Override
                     public void onZeroItemsLoaded() {
-                        remote.queryFirstPage();
+                        remote.getFirstPage(id);
                     }
 
                     @Override

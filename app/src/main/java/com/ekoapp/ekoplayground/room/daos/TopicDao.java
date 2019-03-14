@@ -9,6 +9,8 @@ import com.ekoapp.ekoplayground.room.entities.Topic;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import org.joda.time.DateTime;
+
 @Dao
 public abstract class TopicDao extends EkoDao<Topic> {
 
@@ -19,7 +21,8 @@ public abstract class TopicDao extends EkoDao<Topic> {
             JsonObject topic = jsonArray.get(i).getAsJsonObject();
             insert(new Topic(topic.get("_id").getAsString(),
                     topic.get("name").getAsString(),
-                    topic.get("gid").getAsString()));
+                    topic.get("gid").getAsString(),
+                    new DateTime(topic.get("lastActivity").getAsLong())));
         }
     }
 
@@ -28,6 +31,6 @@ public abstract class TopicDao extends EkoDao<Topic> {
         return getDataSourceFactoryImpl(id);
     }
 
-    @Query("select * from topic where chatId =:id order by lastUpdated DESC")
+    @Query("select * from topic where chatId =:id order by lastActivity DESC")
     abstract DataSource.Factory<Integer, Topic> getDataSourceFactoryImpl(String id);
 }

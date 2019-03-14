@@ -11,6 +11,8 @@ import com.google.common.base.Objects;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import org.joda.time.DateTime;
+
 @Dao
 public abstract class ChatDao extends EkoDao<Chat> {
 
@@ -20,15 +22,16 @@ public abstract class ChatDao extends EkoDao<Chat> {
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
             JsonObject chat = jsonObject.get("group").getAsJsonObject();
-
             if (Objects.equal(ChatType.DIRECT, ChatType.fromApikey(chat.get("type").getAsString()))) {
                 insert(new Chat(chat.get("_id").getAsString(),
                         "direct",
-                        ChatType.DIRECT));
+                        ChatType.DIRECT,
+                        DateTime.parse(chat.get("lastActivity").getAsString())));
             } else {
                 insert(new Chat(chat.get("_id").getAsString(),
                         chat.get("name").getAsString(),
-                        ChatType.GROUP));
+                        ChatType.GROUP,
+                        DateTime.parse(chat.get("lastActivity").getAsString())));
             }
         }
     }
@@ -38,6 +41,6 @@ public abstract class ChatDao extends EkoDao<Chat> {
         return getDataSourceFactoryImpl();
     }
 
-    @Query("select * from chat order by lastUpdated DESC")
+    @Query("select * from chat order by lastActivity DESC")
     abstract DataSource.Factory<Integer, Chat> getDataSourceFactoryImpl();
 }

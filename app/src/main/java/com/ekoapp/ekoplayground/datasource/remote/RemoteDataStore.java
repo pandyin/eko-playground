@@ -16,13 +16,13 @@ public abstract class RemoteDataStore<ENTITY extends EkoEntity> {
         this.dao = dao;
     }
 
-    public void queryFirstPage() {
-        EkoSocket.call(getFirstPageRequest())
+    public void getFirstPage(String id) {
+        EkoSocket.call(getFirstPageRequest(id))
                 .map(JsonElement::getAsJsonArray)
                 .doOnSuccess(dao::insert)
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
 
-    abstract EkoRequest getFirstPageRequest();
+    abstract EkoRequest getFirstPageRequest(String id);
 }

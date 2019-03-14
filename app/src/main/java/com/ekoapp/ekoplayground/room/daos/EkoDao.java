@@ -8,37 +8,18 @@ import android.arch.persistence.room.Update;
 import com.ekoapp.ekoplayground.room.entities.EkoEntity;
 import com.google.gson.JsonArray;
 
-import org.joda.time.DateTime;
-
 import java.util.List;
 
 public abstract class EkoDao<ENTITY extends EkoEntity> {
 
     @Update
-    abstract void updateImpl(ENTITY entity);
-
-    public void update(ENTITY entity) {
-        entity.setLastUpdated(DateTime.now());
-        updateImpl(entity);
-    }
+    public abstract void update(ENTITY entity);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract void insertImpl(ENTITY entity);
-
-    public void insert(ENTITY entity) {
-        entity.setLastUpdated(DateTime.now());
-        insertImpl(entity);
-    }
+    public abstract void insert(ENTITY entity);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract void insertImpl(List<ENTITY> entities);
-
-    public void insert(List<ENTITY> entities) {
-        for (ENTITY entity : entities) {
-            entity.setLastUpdated(DateTime.now());
-        }
-        insertImpl(entities);
-    }
+    public abstract void insert(List<ENTITY> entities);
 
     public void insert(JsonArray jsonArray) {
 
