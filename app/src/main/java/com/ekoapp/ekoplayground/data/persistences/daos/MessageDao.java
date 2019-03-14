@@ -5,7 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Transaction;
 
-import com.ekoapp.ekoplayground.common.models.MessageType;
+import com.ekoapp.ekoplayground.common.MessageType;
 import com.ekoapp.ekoplayground.data.persistences.entities.Message;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

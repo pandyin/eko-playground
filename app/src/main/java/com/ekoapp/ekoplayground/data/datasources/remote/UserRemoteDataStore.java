@@ -1,6 +1,6 @@
 package com.ekoapp.ekoplayground.data.datasources.remote;
 
-import com.ekoapp.ekoplayground.common.socket.EkoSocket;
+import com.ekoapp.ekoplayground.socket.EkoSocket;
 import com.ekoapp.ekoplayground.data.persistences.daos.UserDao;
 import com.ekoapp.ekoplayground.data.persistences.entities.User;
 

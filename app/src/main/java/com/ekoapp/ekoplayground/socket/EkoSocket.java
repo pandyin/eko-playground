@@ -1,6 +1,6 @@
-package com.ekoapp.ekoplayground.common.socket;
+package com.ekoapp.ekoplayground.socket;
 
-import com.ekoapp.ekoplayground.common.socket.requests.EkoRequest;
+import com.ekoapp.ekoplayground.socket.requests.EkoRequest;
 import com.ekoapp.ekoplayground.data.persistences.EkoDatabase;
 import com.google.common.base.Optional;
 import com.google.common.collect.Maps;

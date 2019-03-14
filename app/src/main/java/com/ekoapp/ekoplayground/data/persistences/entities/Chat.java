@@ -4,7 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.support.annotation.NonNull;
 
-import com.ekoapp.ekoplayground.common.models.ChatType;
+import com.ekoapp.ekoplayground.common.ChatType;
 
 import org.joda.time.DateTime;
 

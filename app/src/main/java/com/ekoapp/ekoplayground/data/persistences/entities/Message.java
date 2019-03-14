@@ -5,7 +5,7 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.support.annotation.NonNull;
 
-import com.ekoapp.ekoplayground.common.models.MessageType;
+import com.ekoapp.ekoplayground.common.MessageType;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 

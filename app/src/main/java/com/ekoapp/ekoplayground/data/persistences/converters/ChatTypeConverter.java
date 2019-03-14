@@ -2,7 +2,7 @@ package com.ekoapp.ekoplayground.data.persistences.converters;
 
 import android.arch.persistence.room.TypeConverter;
 
-import com.ekoapp.ekoplayground.common.models.ChatType;
+import com.ekoapp.ekoplayground.common.ChatType;
 
 public class ChatTypeConverter {
 

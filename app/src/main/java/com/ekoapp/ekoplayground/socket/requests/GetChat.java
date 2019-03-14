@@ -1,6 +1,6 @@
-package com.ekoapp.ekoplayground.common.socket.requests;
+package com.ekoapp.ekoplayground.socket.requests;
 
-import com.ekoapp.ekoplayground.common.models.ChatType;
+import com.ekoapp.ekoplayground.common.ChatType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

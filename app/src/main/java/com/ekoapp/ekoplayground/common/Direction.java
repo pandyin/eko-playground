@@ -1,4 +1,4 @@
-package com.ekoapp.ekoplayground.common.models;
+package com.ekoapp.ekoplayground.common;
 
 public enum Direction {
 

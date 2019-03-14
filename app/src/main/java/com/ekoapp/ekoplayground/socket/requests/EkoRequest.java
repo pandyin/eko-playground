@@ -1,4 +1,4 @@
-package com.ekoapp.ekoplayground.common.socket.requests;
+package com.ekoapp.ekoplayground.socket.requests;
 
 import com.google.gson.JsonElement;
 
