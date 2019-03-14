@@ -2,12 +2,12 @@ package com.ekoapp.ekoplayground.datasource.remote;
 
 import com.ekoapp.ekoplayground.requests.EkoRequest;
 import com.ekoapp.ekoplayground.requests.ImmutableGetTopic;
-import com.ekoapp.ekoplayground.room.daos.EkoDao;
+import com.ekoapp.ekoplayground.room.daos.TopicDao;
 import com.ekoapp.ekoplayground.room.entities.Topic;
 
-public class TopicRemoteDataStore extends RemoteDataStore<Topic> {
+public class TopicRemoteDataStore extends EkoListRemoteDataStore<Topic> {
 
-    public TopicRemoteDataStore(EkoDao<Topic> dao) {
+    public TopicRemoteDataStore(TopicDao dao) {
         super(dao);
     }
 

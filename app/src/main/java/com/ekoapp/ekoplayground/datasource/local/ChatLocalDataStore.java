@@ -1,11 +1,11 @@
 package com.ekoapp.ekoplayground.datasource.local;
 
-import com.ekoapp.ekoplayground.room.daos.EkoDao;
+import com.ekoapp.ekoplayground.room.daos.ChatDao;
 import com.ekoapp.ekoplayground.room.entities.Chat;
 
-public class ChatLocalDataStore extends LocalDataStore<Chat> {
+public class ChatLocalDataStore extends EkoListLocalDataStore<Chat> {
 
-    public ChatLocalDataStore(EkoDao<Chat> dao) {
+    public ChatLocalDataStore(ChatDao dao) {
         super(dao);
     }
 }

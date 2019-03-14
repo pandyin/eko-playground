@@ -8,18 +8,16 @@ import com.google.gson.JsonElement;
 
 import io.reactivex.schedulers.Schedulers;
 
-public abstract class RemoteDataStore<ENTITY extends EkoEntity> {
+public abstract class EkoListRemoteDataStore<ENTITY extends EkoEntity> extends EkoRemoteDataStore<ENTITY> {
 
-    private final EkoDao<ENTITY> dao;
-
-    RemoteDataStore(EkoDao<ENTITY> dao) {
-        this.dao = dao;
+    EkoListRemoteDataStore(EkoDao<ENTITY> dao) {
+        super(dao);
     }
 
     public void getFirstPage(String id) {
         EkoSocket.call(getFirstPageRequest(id))
                 .map(JsonElement::getAsJsonArray)
-                .doOnSuccess(dao::insert)
+                .doOnSuccess(getDao()::insert)
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }

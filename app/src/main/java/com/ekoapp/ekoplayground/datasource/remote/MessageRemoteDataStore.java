@@ -2,12 +2,12 @@ package com.ekoapp.ekoplayground.datasource.remote;
 
 import com.ekoapp.ekoplayground.requests.EkoRequest;
 import com.ekoapp.ekoplayground.requests.ImmutableGetLatestMessage;
-import com.ekoapp.ekoplayground.room.daos.EkoDao;
+import com.ekoapp.ekoplayground.room.daos.MessageDao;
 import com.ekoapp.ekoplayground.room.entities.Message;
 
-public class MessageRemoteDataStore extends RemoteDataStore<Message> {
+public class MessageRemoteDataStore extends EkoListRemoteDataStore<Message> {
 
-    public MessageRemoteDataStore(EkoDao<Message> dao) {
+    public MessageRemoteDataStore(MessageDao dao) {
         super(dao);
     }
 

@@ -8,18 +8,18 @@ import android.widget.EditText;
 import com.ekoapp.ekoplayground.R;
 import com.ekoapp.ekoplayground.R2;
 import com.ekoapp.ekoplayground.activities.intents.ChatIntent;
-import com.ekoapp.ekoplayground.room.entities.User;
-import com.ekoapp.ekoplayground.viewmodels.LogInViewModel;
+import com.ekoapp.ekoplayground.contract.LogInContract;
+import com.ekoapp.ekoplayground.presenters.UserPresenter;
+import com.ekoapp.ekoplayground.viewmodels.UserViewModel;
 import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.ScopeProvider;
 
 import butterknife.BindView;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
-public class LogInActivity extends EkoActivity {
+public class UserActivity extends EkoActivity implements LogInContract {
 
     @BindView(R2.id.username_edit_text)
     EditText username;
@@ -31,7 +31,7 @@ public class LogInActivity extends EkoActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_in);
+        setContentView(R.layout.activity_user);
 
         Flowable.combineLatest(RxTextView.afterTextChangeEvents(username).toFlowable(BackpressureStrategy.BUFFER),
                 RxTextView.afterTextChangeEvents(password).toFlowable(BackpressureStrategy.BUFFER),
@@ -41,24 +41,20 @@ public class LogInActivity extends EkoActivity {
                 .as(AutoDispose.autoDisposable(this))
                 .subscribe();
 
-        LogInViewModel viewModel = ViewModelProviders.of(this)
-                .get(LogInViewModel.class);
+        UserViewModel viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        UserPresenter presenter = new UserPresenter(viewModel, this);
+        presenter.logIn();
+        logIn.setOnClickListener(v -> presenter.logIn(username.getText().toString(), password.getText().toString()));
+    }
 
-        Consumer<User> logInConsumer = user -> {
-            startActivity(new ChatIntent(this));
-            finish();
-        };
+    @Override
+    public void onLoggedIn() {
+        startActivity(new ChatIntent(this));
+        finish();
+    }
 
-        viewModel.logIn()
-                .doOnSuccess(logInConsumer)
-                .subscribeOn(Schedulers.io())
-                .as(AutoDispose.autoDisposable(this))
-                .subscribe();
-
-        logIn.setOnClickListener(v -> viewModel.logIn(username.getText().toString(), password.getText().toString())
-                .doOnSuccess(logInConsumer)
-                .subscribeOn(Schedulers.io())
-                .as(AutoDispose.autoDisposable(this))
-                .subscribe());
+    @Override
+    public ScopeProvider getScopeProvider() {
+        return this;
     }
 }

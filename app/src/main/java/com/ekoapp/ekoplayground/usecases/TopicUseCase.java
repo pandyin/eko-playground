@@ -1,11 +1,11 @@
 package com.ekoapp.ekoplayground.usecases;
 
-import com.ekoapp.ekoplayground.repositories.EkoRepository;
+import com.ekoapp.ekoplayground.repositories.EkoListRepository;
 import com.ekoapp.ekoplayground.room.entities.Topic;
 
-public abstract class TopicUseCase<SOMETHING> extends EkoUseCase<Topic, SOMETHING> {
+public abstract class TopicUseCase<REQUEST extends EkoRequest, SOMETHING> extends EkoUseCase<EkoListRepository<Topic>, REQUEST, SOMETHING> {
 
-    TopicUseCase(EkoRepository<Topic> repository) {
+    TopicUseCase(EkoListRepository<Topic> repository) {
         super(repository);
     }
 }

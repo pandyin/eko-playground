@@ -1,11 +1,11 @@
 package com.ekoapp.ekoplayground.usecases;
 
-import com.ekoapp.ekoplayground.repositories.EkoRepository;
+import com.ekoapp.ekoplayground.repositories.EkoListRepository;
 import com.ekoapp.ekoplayground.room.entities.Chat;
 
-public abstract class ChatUseCase<SOMETHING> extends EkoUseCase<Chat, SOMETHING> {
+public abstract class ChatUseCase<REQUEST extends EkoRequest, SOMETHING> extends EkoUseCase<EkoListRepository<Chat>, REQUEST, SOMETHING> {
 
-    ChatUseCase(EkoRepository<Chat> repository) {
+    ChatUseCase(EkoListRepository<Chat> repository) {
         super(repository);
     }
 }

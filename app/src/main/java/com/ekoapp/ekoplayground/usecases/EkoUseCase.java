@@ -1,15 +1,18 @@
 package com.ekoapp.ekoplayground.usecases;
 
 import com.ekoapp.ekoplayground.repositories.EkoRepository;
-import com.ekoapp.ekoplayground.room.entities.EkoEntity;
 
-public abstract class EkoUseCase<ENTITY extends EkoEntity, SOMETHING> {
+public abstract class EkoUseCase<REPOSITORY extends EkoRepository, REQUEST extends EkoRequest, RESPONSE> {
 
-    EkoRepository<ENTITY> repository;
+    private final REPOSITORY repository;
 
-    EkoUseCase(EkoRepository<ENTITY> repository) {
+    EkoUseCase(REPOSITORY repository) {
         this.repository = repository;
     }
 
-    public abstract SOMETHING execute(String id);
+    REPOSITORY getRepository() {
+        return repository;
+    }
+
+    public abstract RESPONSE execute(REQUEST request);
 }

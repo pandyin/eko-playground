@@ -7,18 +7,18 @@ import com.uber.autodispose.AutoDispose;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MessagePresenter extends EkoPresenter<MessageViewModel, MessageContract> {
+public class MessagePresenter extends EkoListPresenter<MessageViewModel, MessageContract> {
 
     public MessagePresenter(MessageViewModel viewModel, MessageContract contract) {
         super(viewModel, contract);
     }
 
     public void test(String topicId) {
-        viewModel.getPagedList(topicId)
+        getViewModel().getPagedList(topicId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(contract::submitList)
+                .doOnNext(getContract()::submitList)
                 .subscribeOn(Schedulers.io())
-                .as(AutoDispose.autoDisposable(contract.getScopeProvider()))
+                .as(AutoDispose.autoDisposable(getContract().getScopeProvider()))
                 .subscribe();
     }
 }

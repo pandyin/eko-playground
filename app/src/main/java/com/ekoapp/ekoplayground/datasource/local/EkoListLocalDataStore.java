@@ -5,12 +5,10 @@ import android.arch.paging.DataSource;
 import com.ekoapp.ekoplayground.room.daos.EkoDao;
 import com.ekoapp.ekoplayground.room.entities.EkoEntity;
 
-public abstract class LocalDataStore<ENTITY extends EkoEntity> {
+public abstract class EkoListLocalDataStore<ENTITY extends EkoEntity> extends EkoLocalDataStore {
 
-    private final EkoDao<ENTITY> dao;
-
-    LocalDataStore(EkoDao<ENTITY> dao) {
-        this.dao = dao;
+    EkoListLocalDataStore(EkoDao<ENTITY> dao) {
+        super(dao);
     }
 
     public DataSource.Factory<Integer, ENTITY> getFactory(String id) {

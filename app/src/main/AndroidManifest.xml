@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:name">
-        <activity android:name=".activities.LogInActivity">
+        <activity android:name=".activities.UserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

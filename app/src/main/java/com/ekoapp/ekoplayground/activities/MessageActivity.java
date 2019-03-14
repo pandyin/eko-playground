@@ -23,7 +23,6 @@ public class MessageActivity extends EkoActivity implements MessageContract {
     @BindView(R2.id.message_recycler_view)
     RecyclerView messageList;
 
-    private MessagePresenter presenter;
     private MessageAdapter adapter;
 
     @Override
@@ -32,7 +31,7 @@ public class MessageActivity extends EkoActivity implements MessageContract {
         setContentView(R.layout.activity_message);
 
         MessageViewModel viewModel = ViewModelProviders.of(this).get(MessageViewModel.class);
-        presenter = new MessagePresenter(viewModel, this);
+        MessagePresenter presenter = new MessagePresenter(viewModel, this);
         presenter.test(MessageIntent.getTopicId(getIntent()));
     }
 

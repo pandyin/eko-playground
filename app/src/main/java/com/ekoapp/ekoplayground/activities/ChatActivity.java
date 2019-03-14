@@ -22,7 +22,6 @@ public class ChatActivity extends EkoActivity implements ChatContract {
     @BindView(R2.id.chat_recycler_view)
     RecyclerView chatList;
 
-    private ChatPresenter presenter;
     private ChatAdapter adapter;
 
     @Override
@@ -31,7 +30,7 @@ public class ChatActivity extends EkoActivity implements ChatContract {
         setContentView(R.layout.activity_chat);
 
         ChatViewModel viewModel = ViewModelProviders.of(this).get(ChatViewModel.class);
-        presenter = new ChatPresenter(viewModel, this);
+        ChatPresenter presenter = new ChatPresenter(viewModel, this);
         presenter.test(null);
     }
 

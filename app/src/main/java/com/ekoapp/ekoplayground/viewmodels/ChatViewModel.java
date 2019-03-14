@@ -7,11 +7,12 @@ import android.support.annotation.NonNull;
 import com.ekoapp.ekoplayground.repositories.ChatRepository;
 import com.ekoapp.ekoplayground.room.EkoDatabase;
 import com.ekoapp.ekoplayground.room.entities.Chat;
+import com.ekoapp.ekoplayground.usecases.ChatGetPagedListRequest;
 import com.ekoapp.ekoplayground.usecases.ChatGetPagedListUseCase;
 
 import io.reactivex.Flowable;
 
-public class ChatViewModel extends EkoViewModel<Chat> {
+public class ChatViewModel extends EkoListViewModel<Chat> {
 
     public ChatViewModel(@NonNull Application application) {
         super(application);
@@ -19,6 +20,9 @@ public class ChatViewModel extends EkoViewModel<Chat> {
 
     @Override
     public Flowable<PagedList<Chat>> getPagedList(String id) {
-        return new ChatGetPagedListUseCase(new ChatRepository(EkoDatabase.get().getChatDao())).execute(id);
+        ChatRepository repository = new ChatRepository(EkoDatabase.get().getChatDao());
+        ChatGetPagedListRequest request = new ChatGetPagedListRequest();
+        ChatGetPagedListUseCase useCase = new ChatGetPagedListUseCase(repository);
+        return useCase.execute(request);
     }
 }
