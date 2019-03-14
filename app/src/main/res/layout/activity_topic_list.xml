@@ -4,6 +4,6 @@
     android:id="@+id/topic_list_recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.TopicActivity">
+    tools:context=".presentation.activities.TopicActivity">
 
 </android.support.v7.widget.RecyclerView>

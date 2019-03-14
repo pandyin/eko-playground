@@ -2,7 +2,7 @@ package com.ekoapp.ekoplayground;
 
 import android.support.multidex.MultiDexApplication;
 
-import com.ekoapp.ekoplayground.room.EkoDatabase;
+import com.ekoapp.ekoplayground.data.persistences.EkoDatabase;
 
 public class EkoApp extends MultiDexApplication {
 

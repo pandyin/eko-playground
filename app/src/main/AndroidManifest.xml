@@ -16,16 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:name">
-        <activity android:name=".activities.UserActivity">
+        <activity android:name=".presentation.activities.UserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ChatActivity" />
-        <activity android:name=".activities.TopicActivity" />
-        <activity android:name=".activities.MessageActivity" />
+        <activity android:name=".presentation.activities.ChatActivity" />
+        <activity android:name=".presentation.activities.TopicActivity" />
+        <activity android:name=".presentation.activities.MessageActivity" />
     </application>
 
 </manifest>
